@@ -26,4 +26,22 @@ print (tmp)
 #Wrtite the frame to file with zones
 tmp.to_csv('city_zones.csv', header=False)
 
-
+#Converting the lat long to the Zones
+for index, row in df.iterrows():
+        lat= row["latitude"]
+        lon=row["longitude"]
+        name=row["screenName"]
+        try:
+                val = w.tzNameAt(lat, lon)
+                print (index, name, lat, lon, val)
+                tmp.set_value(index,"text",row["text"])
+                tmp.set_value(index, "created", row["created"])
+                tmp.set_value(index, "screenName", row["screenName"])
+                tmp.set_value(index, "longitude", row["longitude"])
+                tmp.set_value(index, "latitude", row["latitude"])
+                tmp.set_value(index, "decHour", row["decHour"])
+                tmp.set_value(index, "Hour", row["Hour"])
+                tmp.set_value(index, "minute", row["minute"])
+                tmp.set_value(index, "zone", val)
+        except KeyError:
+                print "KeyError"
